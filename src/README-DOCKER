@@ -1,0 +1,20 @@
+docker 打包测试步骤：
+IDEA:
+    mvn clean package docker:build
+CentOS:
+    docker run -d -p 8080:8080 springio/demo
+
+
+
+
+打包的镜像名对应pom文件中的
+<imageName>${docker.image.prefix}/${project.artifactId}</imageName>
+
+
+
+
+注意：
+    该项目对应着的 REPOSITORY 为“springio/demo”，打包到仓库时，应该确保仓库中没有这个镜像，可以通过“docker images springio/demo”查找，
+如果有的话，应该删除对应的镜像“docker rmi <image id>”。
+    打包后的jar包，应该放在dockerfile同级目录下。
+

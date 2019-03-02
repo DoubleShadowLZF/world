@@ -1,0 +1,5 @@
+yaml:
+  app-id:
+    - com.double.demo
+    - com.test.demo
+    - com.appid.demo

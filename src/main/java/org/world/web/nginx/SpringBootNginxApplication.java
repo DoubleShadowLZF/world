@@ -14,7 +14,7 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@SpringBootApplication
+//@SpringBootApplication
 @RestController
 @RequestMapping("/user/login/*")
 public class SpringBootNginxApplication {
@@ -62,7 +62,7 @@ public class SpringBootNginxApplication {
 		return request.getSession().getId() + ":" + request.getSession().getAttribute("verifyCode");
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		SpringApplication.run(SpringBootNginxApplication.class, args);
-	}
+	}*/
 }

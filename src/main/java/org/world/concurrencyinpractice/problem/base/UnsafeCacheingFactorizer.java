@@ -137,7 +137,7 @@ class CachedFactorizer {
 		return (double) cacheHits / (double) hits;
 	}
 
-	@GetMapping
+	@GetMapping("CachedFactorizerService")
 	public Object service(HttpServletRequest request) {
 		String num = request.getParameter("num");
 		List<BigInteger> factors = null;

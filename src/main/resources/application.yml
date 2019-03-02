@@ -1,0 +1,17 @@
+world:
+  house:
+    room:
+      people:
+        name: double
+
+woman:
+  name: Yuuki Asuna
+  age: 17
+  BWH: 82/60/83
+man:
+  name: Double
+  age: 24
+  chest: 18
+
+server:
+  port: 8080

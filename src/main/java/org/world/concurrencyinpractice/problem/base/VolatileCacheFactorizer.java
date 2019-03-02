@@ -15,7 +15,7 @@ import java.math.BigInteger;
 @RequestMapping("/VolatileCacheFactorizer")
 public class VolatileCacheFactorizer {
 
-	private volatile OneValueCache cache = new OneValueCache(null,null);
+	private volatile OneValueCache cache = new OneValueCache(new BigInteger("123"),new BigInteger[]{new BigInteger("123"),new BigInteger("456")});
 
 	@PostMapping
 	public Object service(String num,String total){
