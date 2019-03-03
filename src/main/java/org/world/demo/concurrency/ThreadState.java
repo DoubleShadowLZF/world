@@ -79,7 +79,7 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.131-b11 mixed mode):
 
 //BlockedThread-2 线程阻塞在获取Blocked.class示例的锁上
 "BlockedThread-2" #15 prio=5 os_prio=0 tid=0x000000001b483800 nid=0x4f4 waiting for monitor entry [0x000000001bf5f000]
-   java.lang.Thread.State: BLOCKED (on object monitor)
+   java.lang.Thread.State: BLOCKED (on b_object monitor)
         at org.world.demo.concurrency.ThreadState$Blocked.run(ThreadState.java:56)
         - waiting to lock <0x00000000d63ad5a0> (a java.lang.Class for org.world.demo.concurrency.ThreadState$Blocked)
         at java.lang.Thread.run(Thread.java:748)
@@ -97,7 +97,7 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.131-b11 mixed mode):
 
 //WaitingThread 线程在waiting实例上等待
 "WaitingThread" #13 prio=5 os_prio=0 tid=0x000000001b48b000 nid=0x4524 in Object.wait() [0x000000001bd5e000]
-   java.lang.Thread.State: WAITING (on object monitor)
+   java.lang.Thread.State: WAITING (on b_object monitor)
         at java.lang.Object.wait(Native Method)
         - waiting on <0x00000000d63aa968> (a java.lang.Class for org.world.demo.concurrency.ThreadState$Waiting)
         at java.lang.Object.wait(Object.java:502)
@@ -154,7 +154,7 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.131-b11 mixed mode):
    java.lang.Thread.State: RUNNABLE
 
 "Finalizer" #3 daemon prio=8 os_prio=1 tid=0x00000000196f3800 nid=0x4034 in Object.wait() [0x000000001aa5f000]
-   java.lang.Thread.State: WAITING (on object monitor)
+   java.lang.Thread.State: WAITING (on b_object monitor)
         at java.lang.Object.wait(Native Method)
         - waiting on <0x00000000d6108ec8> (a java.lang.ref.ReferenceQueue$Lock)
         at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:143)
@@ -163,7 +163,7 @@ Full thread dump Java HotSpot(TM) 64-Bit Server VM (25.131-b11 mixed mode):
         at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
 
 "Reference Handler" #2 daemon prio=10 os_prio=2 tid=0x0000000002efe000 nid=0x48e4 in Object.wait() [0x000000001a95f000]
-   java.lang.Thread.State: WAITING (on object monitor)
+   java.lang.Thread.State: WAITING (on b_object monitor)
         at java.lang.Object.wait(Native Method)
         - waiting on <0x00000000d6106b68> (a java.lang.ref.Reference$Lock)
         at java.lang.Object.wait(Object.java:502)
