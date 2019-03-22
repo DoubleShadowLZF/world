@@ -1,0 +1,7 @@
+
+distribute:
+  id:
+    #工作机器ID
+    work-id: 07
+    #数据中心ID
+    data-center-id: 01
