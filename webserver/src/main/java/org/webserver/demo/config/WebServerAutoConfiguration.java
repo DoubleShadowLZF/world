@@ -11,8 +11,11 @@ import java.net.ServerSocket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@EnableConfigurationProperties(WebServerConfiguration.class)
+/**
+ * web服务器自动配置类
+ */
 @Configuration
+@EnableConfigurationProperties(WebServerConfiguration.class)
 public class WebServerAutoConfiguration {
 
     @Autowired

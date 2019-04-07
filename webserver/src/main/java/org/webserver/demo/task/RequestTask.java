@@ -8,6 +8,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+/**
+ * socket 连接任务处理类
+ */
 @Slf4j
 public class RequestTask implements Runnable {
     private Socket connection;
@@ -25,6 +28,11 @@ public class RequestTask implements Runnable {
         }
     }
 
+    /**
+     * 处理socket连接发送过来的信息
+     * @param connection
+     * @throws IOException
+     */
     private void handlerRequest(Socket connection) throws IOException {
         log.info("handle the request ...");
         InputStream in = null;
