@@ -18,5 +18,6 @@ public class WebServerConfiguration {
     /**
      * 线程池初始化大小
      */
+    @Deprecated
     private Integer initThreadCount;
 }

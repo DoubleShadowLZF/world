@@ -12,10 +12,10 @@ import org.springframework.stereotype.Component;
 public class WebServerRunner implements ApplicationRunner {
 
     @Autowired
-    private WebServer webServer;
+    private NioWebServer webServer;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        webServer.doService();
+        webServer.startServer();
     }
 }

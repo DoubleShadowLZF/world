@@ -11,9 +11,11 @@ import java.util.concurrent.Executor;
 
 /**
  * web 服务器
+ * <p>使用传统I/O实现socket</p>
  */
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class WebServer {
 
     /**
