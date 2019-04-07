@@ -7,6 +7,9 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * 错误的Timer行为
+ * <p>
+ *     运行1秒就结束了，并抛出了一个异常消息“Timer already cancelled”
+ * </p>
  */
 public class OutOfTime {
     public static void main(String[] args) throws InterruptedException {

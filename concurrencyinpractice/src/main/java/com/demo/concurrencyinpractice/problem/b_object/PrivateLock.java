@@ -1,6 +1,6 @@
 package com.demo.concurrencyinpractice.problem.b_object;
 
-import org.world.concurrencyinpractice.problem.a_base.Widget;
+import com.demo.concurrencyinpractice.problem.a_base.Widget;
 
 import javax.annotation.concurrent.GuardedBy;
 
