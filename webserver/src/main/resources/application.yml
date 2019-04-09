@@ -1,3 +1,9 @@
 web-server:
-  port: 80 #服务器对外开放的端口
-  init-thread-count: 10 #支持同时连接服务器的连接数
+  port: 80
+  init-thread-count: 10
+  file-server:
+    path: D:\Users\Double\Documents
+
+logging:
+  level:
+    org.webserver.demo: debug

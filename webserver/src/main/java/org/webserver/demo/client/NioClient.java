@@ -36,7 +36,7 @@ public class NioClient {
                 channel.finishConnect();
             }
             channel.configureBlocking(false);
-            channel.write(ByteBuffer.wrap(new String("client").getBytes()));
+            channel.write(ByteBuffer.wrap(new String("list").getBytes()));
             //注册选择器，读就绪
             channel.register(this.selector,SelectionKey.OP_READ);
         }catch (IOException e){

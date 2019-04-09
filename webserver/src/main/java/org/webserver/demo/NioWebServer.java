@@ -1,6 +1,7 @@
 package org.webserver.demo;
 
 import lombok.extern.slf4j.Slf4j;
+import org.webserver.demo.common.DataBuffer;
 import org.webserver.demo.task.ConsoleTask;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ import java.util.concurrent.Executors;
 /**
  * web服务器
  * <p>使用nio实现socket</p>
+ * @link http://tutorials.jenkov.com/java-nio/socketchannel.html
  */
 @Slf4j
 public class NioWebServer {
@@ -34,7 +36,12 @@ public class NioWebServer {
         this.port = port;
     }
 
-    private void doAccep(SelectionKey key) {
+    /**
+     * 接受连接事件
+     * @param key
+     */
+    public void doAccept(SelectionKey key) {
+        log.debug("socket 接受连接事件：");
         ServerSocketChannel serverchannel = (ServerSocketChannel) key.channel();
         SocketChannel channel;
         try {
@@ -51,7 +58,8 @@ public class NioWebServer {
         }
     }
 
-    private void doRead(SelectionKey key) throws IOException {
+    public void doRead(SelectionKey key) throws IOException {
+        log.debug("socket 读取事件：");
         SocketChannel channel = (SocketChannel) key.channel();
         ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
         try {
@@ -69,15 +77,24 @@ public class NioWebServer {
         }
     }
 
-    private void doWrite(SelectionKey key,String text)throws IOException{
+    public void doWrite(SelectionKey key,String text)throws IOException{
+        log.debug("socket 写入事件：");
         SocketChannel channel = (SocketChannel) key.channel();
-        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+//        ByteBuffer byteBuffer = DataBuffer.getWriteBuffer();
+//        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
+//        log.debug("===writeBuffer:{}",new String(byteBuffer.array()));
         try{
-            byteBuffer.put(text.getBytes());
+            if(DataBuffer.writeBuffer().remaining() == 0){
+                DataBuffer.writeAppend(text);
+            }
             //翻转这个缓冲区。 该限制设置为当前位置，然后将该位置设置为零。 如果标记被定义，则它被丢弃。
             //在通道读取或放置操作的序列之后，调用此方法来准备一系列通道写入或相对获取操作。
-            byteBuffer.flip();
-            channel.write(byteBuffer);
+//            byteBuffer.flip();
+            while(DataBuffer.writeBuffer().hasRemaining()){
+                channel.write(DataBuffer.writeBuffer());
+            }
+            //将key的interest集合设置为读模式
+            key.interestOps(SelectionKey.OP_READ);
         }catch (Exception e){
             key.channel();
             if(key.channel() != null){
@@ -85,17 +102,18 @@ public class NioWebServer {
             }
             e.printStackTrace();
         }
-        //将key的interest集合设置为读模式
-        key.interestOps(SelectionKey.OP_READ);
     }
 
     public void startServer() throws IOException{
         selector = SelectorProvider.provider().openSelector();
+        //开启连接
+        //①打开通道
         ServerSocketChannel ssc = ServerSocketChannel.open();
-        //设置为非非阻塞模式
+        //②设置通道为非非阻塞模式
         ssc.configureBlocking(false);
-
-        InetSocketAddress isa = new InetSocketAddress(80);
+        //③设置端口号
+        InetSocketAddress isa = new InetSocketAddress(port);
+        //④将通道绑定端口号
         ssc.socket().bind(isa);
 
         //让Selector为这个channel服务，
@@ -103,27 +121,27 @@ public class NioWebServer {
         //ServerSocketChannel只有OP_ACCEPT可用，
         // OP_CONNECT，OP_READ，OP_WRITE用于SocketChannel
         ssc.register(selector,SelectionKey.OP_ACCEPT);
-
+        log.info("开启 web 服务器");
         while(true){
             //阻塞方法
             selector.select();
             Set<SelectionKey> readyKeys = selector.selectedKeys();
             Iterator<SelectionKey> it = readyKeys.iterator();
             while(it.hasNext()){
-                SelectionKey key = (SelectionKey) it.next();
+                SelectionKey key = it.next();
                 //避免重复处理相同的SelectionKey
                 it.remove();
+                DataBuffer.init(key,selector);
                 //测试此键的通道是否已准备好接受新的套接字连接（Socket连接）
                 if(key.isAcceptable()){
-                    doAccep(key);
+                    doAccept(key);
                 //此键是否有效 && 此键的通道是否准备好进行读取
                 }else if(key.isValid() && key.isReadable()){
                     doRead(key);
                 //此键是否有效 && 此键的通道是否已准备好进行写入
                 }else if(key.isValid() && key.isWritable()){
-                    doWrite(key,"web server ...");
+                    doWrite(key,"<<<<web server accepted");
                 }
-
             }
         }
     }
