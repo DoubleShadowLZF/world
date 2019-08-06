@@ -1,7 +1,7 @@
 package org.webserver.demo;
 
 import lombok.extern.slf4j.Slf4j;
-import org.webserver.demo.common.DataBuffer;
+import org.webserver.demo.common.WriteBuffer;
 import org.webserver.demo.task.ConsoleTask;
 
 import java.io.IOException;
@@ -80,18 +80,18 @@ public class NioWebServer {
     public void doWrite(SelectionKey key,String text)throws IOException{
         log.debug("socket 写入事件：");
         SocketChannel channel = (SocketChannel) key.channel();
-//        ByteBuffer byteBuffer = DataBuffer.getWriteBuffer();
+//        ByteBuffer byteBuffer = WriteBuffer.getWriteBuffer();
 //        ByteBuffer byteBuffer = ByteBuffer.allocate(1024);
 //        log.debug("===writeBuffer:{}",new String(byteBuffer.array()));
         try{
-            if(DataBuffer.writeBuffer().remaining() == 0){
-                DataBuffer.writeAppend(text);
+            if(WriteBuffer.writeBuffer().remaining() == 0){
+                WriteBuffer.writeAppend(text);
             }
             //翻转这个缓冲区。 该限制设置为当前位置，然后将该位置设置为零。 如果标记被定义，则它被丢弃。
             //在通道读取或放置操作的序列之后，调用此方法来准备一系列通道写入或相对获取操作。
 //            byteBuffer.flip();
-            while(DataBuffer.writeBuffer().hasRemaining()){
-                channel.write(DataBuffer.writeBuffer());
+            while(WriteBuffer.writeBuffer().hasRemaining()){
+                channel.write(WriteBuffer.writeBuffer());
             }
             //将key的interest集合设置为读模式
             key.interestOps(SelectionKey.OP_READ);
@@ -131,7 +131,7 @@ public class NioWebServer {
                 SelectionKey key = it.next();
                 //避免重复处理相同的SelectionKey
                 it.remove();
-                DataBuffer.init(key,selector);
+                WriteBuffer.init(key,selector);
                 //测试此键的通道是否已准备好接受新的套接字连接（Socket连接）
                 if(key.isAcceptable()){
                     doAccept(key);

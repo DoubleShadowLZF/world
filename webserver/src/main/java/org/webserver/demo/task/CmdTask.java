@@ -1,7 +1,7 @@
 package org.webserver.demo.task;
 
 import lombok.extern.slf4j.Slf4j;
-import org.webserver.demo.common.DataBuffer;
+import org.webserver.demo.common.WriteBuffer;
 import org.webserver.demo.entity.CmdCode;
 
 import java.io.UnsupportedEncodingException;
@@ -30,7 +30,7 @@ public class CmdTask implements Runnable {
         if (cmdCode == CmdCode.LIST || consoleText.contains("1")) {
             log.debug("列表指令");
             try {
-                DataBuffer.writeAppend("<<<the list command accept");
+                WriteBuffer.writeAppend("<<<the list command accept");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

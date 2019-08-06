@@ -7,7 +7,7 @@ import org.apache.commons.io.filefilter.EmptyFileFilter;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.webserver.demo.common.Constants;
-import org.webserver.demo.common.DataBuffer;
+import org.webserver.demo.common.WriteBuffer;
 import org.webserver.demo.entity.CmdCode;
 import org.webserver.demo.entity.FileEntity;
 
@@ -75,7 +75,7 @@ public class FileTask implements Runnable{
             log.info("查询到的文件夹：{}",fileList);
             //写入buffer ，输出给客户端
             try {
-                DataBuffer.writeAppend(fileList.toString());
+                WriteBuffer.writeAppend(fileList.toString());
             } catch (UnsupportedEncodingException e) {
                 log.error("转码失败");
             }

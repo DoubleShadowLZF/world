@@ -1,8 +1,6 @@
 package org.webserver.demo.common;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.webserver.demo.util.StringUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
@@ -13,13 +11,12 @@ import java.nio.channels.Selector;
  * 数据缓冲区
  */
 @Slf4j
-public class DataBuffer {
+public class WriteBuffer {
     private static Integer DEFAULT_SIZE = 1024;
     private static SelectionKey key;
     private static Selector selector;
 
     private static ByteBuffer writeBuffer = ByteBuffer.allocate(DEFAULT_SIZE);
-    private static ByteBuffer readBuffer = ByteBuffer.allocate(DEFAULT_SIZE);
 
     /**
      * 初始化

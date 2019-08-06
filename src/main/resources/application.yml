@@ -14,4 +14,4 @@ man:
   chest: 18
 
 server:
-  port: 8080
+  port: 7010
