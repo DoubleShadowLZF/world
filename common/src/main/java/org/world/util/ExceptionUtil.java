@@ -11,7 +11,7 @@ public class ExceptionUtil {
     public static RuntimeException launderThrowable(Throwable cause) {
         if (cause instanceof RuntimeException) {
             return (RuntimeException) cause;
-        }else if(cause instanceof java.lang.Error){
+        }else if(cause instanceof Error){
             throw (Error) cause;
         }else {
             throw new IllegalArgumentException("Not unchecked", cause);

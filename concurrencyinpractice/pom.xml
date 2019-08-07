@@ -6,9 +6,8 @@
         <groupId>org.world</groupId>
         <artifactId>demo</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.demo</groupId>
+    <groupId>org.world</groupId>
     <artifactId>concurrencyinpractice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>concurrencyinpractice</name>
@@ -39,6 +38,11 @@
             <artifactId>demo</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.world</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
