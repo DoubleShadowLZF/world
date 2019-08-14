@@ -1,18 +1,22 @@
 package org.world.demo.concurrencydemo.httpserver;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
 
 /**
  * @Description SimpleHttpServer 运行类
  * 将设定的HTML页面放置在该目录下，Chrome不支持socket传图片，请使用Firefox
  */
+@Slf4j
 public class HttpServerMain {
 	public static void main(String[] args) throws IOException {
-		SimpleHttpServer.setBasePath("D:/Document/demo/world/src/main/java/org/world/demo/concurrencydemo/httpserver");
+
+		SimpleHttpServer.setBasePath("D:\\Document\\demo\\world\\common\\src\\main\\java\\org\\world\\demo\\concurrencydemo\\httpserver");
 		try {
 			SimpleHttpServer.start();
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("{}",e);
 		}
 	}
 }

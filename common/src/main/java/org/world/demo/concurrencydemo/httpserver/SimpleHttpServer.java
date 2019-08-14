@@ -1,5 +1,6 @@
 package org.world.demo.concurrencydemo.httpserver;
 
+import lombok.extern.slf4j.Slf4j;
 import org.world.demo.concurrencydemo.thread.pool.DefaultThreadPool;
 import org.world.demo.concurrencydemo.thread.pool.ThreadPool;
 
@@ -15,6 +16,7 @@ import java.net.Socket;
  * 将连接以及请求交给线程池处理，这样使得Web服务器能够同时处理多个客户端请求。
  * PS : 使用Chrome浏览器不能显示图片，使用Firefox浏览器则可以正常显示
  */
+@Slf4j
 public class SimpleHttpServer {
 	/**
 	 * 处理HttpRequest的线程池
@@ -37,12 +39,14 @@ public class SimpleHttpServer {
 	public static void setPort(int port) {
 		if (port > 0) {
 			SimpleHttpServer.port = port;
+			log.info("port:{}",SimpleHttpServer.port);
 		}
 	}
 
 	public static void setBasePath(String basePath) {
 		if (basePath != null && new File(basePath).exists() && new File(basePath).isDirectory()) {
 			SimpleHttpServer.basePath = basePath;
+			log.info("basePath : {}",SimpleHttpServer.basePath);
 		}
 	}
 
@@ -121,11 +125,12 @@ public class SimpleHttpServer {
 	/**
 	 * 关闭流或者Socket
 	 */
-
 	private static void close(Closeable... closeables) {
-		if (closeables != null) {
 			for (Closeable closeable : closeables) {
 				try {
+					if(closeable == null){
+						continue;
+					}
 					closeable.close();
 				}
 				catch (IOException ex) {
@@ -138,7 +143,6 @@ public class SimpleHttpServer {
 					ex.printStackTrace();
 				}
 			}
-		}
 	}
 
 }
