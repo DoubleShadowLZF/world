@@ -21,7 +21,6 @@ public class SimpleHttpServer {
 	/**
 	 * 处理HttpRequest的线程池
 	 */
-
 	static ThreadPool<HttpRequestHandler> threadPool = new DefaultThreadPool<HttpRequestHandler>(11);
 
 	/**
@@ -55,7 +54,7 @@ public class SimpleHttpServer {
 		serverSocket = new ServerSocket(port);
 		Socket socket = null;
 		while ((socket = serverSocket.accept()) != null) {
-			//接收一个客户端Socket，生成一个HttpRequestHandler，放入线程池执行
+			//接收一个客户端Socke生成一个HttpRequestHandlert，，放入线程池执行
 			threadPool.execute(new HttpRequestHandler(socket));
 		}
 		serverSocket.close();
@@ -134,13 +133,13 @@ public class SimpleHttpServer {
 					closeable.close();
 				}
 				catch (IOException ex) {
-					ex.printStackTrace();
+					log.error("{}",ex);
 				}
 				//此处不能只是简答地使用 IOException ，
 				// 因此关闭的资源中有可能本身的对象引用变量为空，此时外抛空指针异常，
 				//socket连接将不会释放
 				catch (Exception ex) {
-					ex.printStackTrace();
+					log.error("{}",ex);
 				}
 			}
 	}
