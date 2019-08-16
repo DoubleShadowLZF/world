@@ -1,5 +1,6 @@
 package org.world.demo.concurrency;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
@@ -7,23 +8,33 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 /**
- * @Function 独占锁
+ * 独占锁
  *
- * @author Double
+ * @author Double4
  */
 public class Mutex implements Lock, Serializable {
   /** 同步器 */
   private static class Sync extends AbstractQueuedSynchronizer {
+
+    /**
+     * @return 是否处于占用状态
+     */
+    @Override
+    @NotNull
+    protected boolean isHeldExclusively() {
+      return getState() == 1;
+    }
+
     /**
      * 当状态为 0 的时候获取锁
      *
-     * @param acquires
-     * @return
+     * @param acquires 期望值，独占锁，只支持 1
+     * @return 可以占用锁返回 true,否则返回 false
      */
     @Override
     protected boolean tryAcquire(int acquires) {
       assert acquires == 1;
-      if (compareAndSetState(0, 1)) {
+      if (compareAndSetState(0, 1)) { //如果当期的状态值为0，则将同步状态原子地设置为1
         // 将当前线程设置为独占线程
         setExclusiveOwnerThread(Thread.currentThread());
         return true;
@@ -34,8 +45,8 @@ public class Mutex implements Lock, Serializable {
     /**
      * 释放锁，将状态设置为 0
      *
-     * @param releases
-     * @return
+     * @param releases 释放的状态值
+     * @return 释放成功为 true，失败为 false
      */
     @Override
     protected boolean tryRelease(int releases) {
@@ -50,19 +61,7 @@ public class Mutex implements Lock, Serializable {
     }
 
     /**
-     * 是否处于占用状态
-     *
-     * @return
-     */
-    @Override
-    protected boolean isHeldExclusively() {
-      return getState() == 1;
-    }
-
-    /**
-     * 返回一个 Condition ，每个condition 都包含了一个 condition 队列
-     *
-     * @return
+     * @return 返回一个 Condition ，每个condition 都包含了一个 condition 队列
      */
     Condition newCondition() {
       return new ConditionObject();
@@ -106,7 +105,8 @@ public class Mutex implements Lock, Serializable {
   }
 
   @Override
-  public boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException {
+
+  public boolean tryLock(long timeout, @NotNull TimeUnit unit) throws InterruptedException {
     return sync.tryAcquireNanos(1, unit.toNanos(timeout));
   }
 }
