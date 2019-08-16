@@ -10,6 +10,7 @@
         <module>guava</module>
         <module>concurrencyinpractice</module>
         <module>common</module>
+        <module>gui</module>
     </modules>
     <packaging>pom</packaging>
 
