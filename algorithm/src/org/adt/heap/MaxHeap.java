@@ -7,6 +7,7 @@ import org.adt.TreeOperation;
 import java.util.Arrays;
 
 /**
+ * 《数据结构与算法经典问题解析：Java语言描述(原书第2版）》 第7章 优先队列和堆<br>
  * ClassName: MaxHeap <br>
  * Description: 最大堆<br>
  * date: 2022/1/2 11:17<br>
@@ -63,6 +64,11 @@ public class MaxHeap implements Heap {
     return ele;
   }
 
+  /**
+   * 堆化当前元素
+   *
+   * @param idx
+   */
   private void percolateDown(int idx) {
     int maxIdx = 0;
     int l = leftChildIdx(idx);
