@@ -38,6 +38,14 @@ public interface Heap {
   int pop();
 
   /**
+   * 节点的父亲节点
+   *
+   * @param idx 当前节点
+   * @return
+   */
+  int parentIdx(int idx);
+
+  /**
    * 返回第一个元素
    *
    * @return

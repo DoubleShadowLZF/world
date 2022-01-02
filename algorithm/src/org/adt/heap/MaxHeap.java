@@ -4,8 +4,6 @@ import org.adt.ConstructTree;
 import org.adt.TreeNode;
 import org.adt.TreeOperation;
 
-import java.util.Arrays;
-
 /**
  * 《数据结构与算法经典问题解析：Java语言描述(原书第2版）》 第7章 优先队列和堆<br>
  * ClassName: MaxHeap <br>
@@ -17,7 +15,7 @@ import java.util.Arrays;
  */
 public class MaxHeap implements Heap {
 
-  private int[] data = new int[16];
+  private Integer[] data = new Integer[16];
 
   private int size = 0;
 
@@ -47,7 +45,7 @@ public class MaxHeap implements Heap {
 
   /** 重新分配大小 */
   private void resize() {
-    int[] data = new int[this.data.length * 2];
+    Integer[] data = new Integer[this.data.length * 2];
     System.arraycopy(this.data, 0, data, 0, this.data.length);
     this.data = data;
   }
@@ -119,6 +117,20 @@ public class MaxHeap implements Heap {
     return rightChildIdx;
   }
 
+  /**
+   * 节点的父亲节点
+   *
+   * @param idx 当前节点
+   * @return
+   */
+  @Override
+  public int parentIdx(int idx) {
+    if (idx <= 0 || idx >= this.size) {
+      return -1;
+    }
+    return (idx - 1) / 2;
+  }
+
   /** @return */
   @Override
   public int peek() {
@@ -128,17 +140,16 @@ public class MaxHeap implements Heap {
   public static void main(String[] args) {
     MaxHeap maxHeap = new MaxHeap();
     int count = 20;
-    System.out.println("添加0-" + count);
+    System.out.println("添加 0 - " + count);
     for (int i = 0; i < count; i++) {
       maxHeap.push(i);
     }
-    Integer[] ret = Arrays.stream(maxHeap.data).boxed().toArray(Integer[]::new);
+    Integer[] ret = maxHeap.data;
     TreeNode root = ConstructTree.constructTree(ret);
     TreeOperation.show(root);
 
     int pop = maxHeap.pop();
     System.out.printf("删除元素：%s\r\n", pop);
-    ret = Arrays.stream(maxHeap.data).boxed().toArray(Integer[]::new);
     root = ConstructTree.constructTree(ret);
     TreeOperation.show(root);
   }
